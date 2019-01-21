@@ -17,6 +17,8 @@ object ApiController {
   val IndexOutOfBoundsException = Future.value(Renderer.error("Request index out of bounds"))
 }
 
+case class HiReq(id: String, age: Int)
+
 class ApiController @Inject()(
     proxy: DifferenceProxy,
     settings: Settings,
@@ -82,6 +84,57 @@ class ApiController @Inject()(
         }
 
       case None => MissingEndpointException
+    }
+  }
+
+  get("/api/1/endpoints/results") { req: Request =>
+    ???
+  }
+
+  put("/api/1/endpoints/results") { req: Request =>
+    ???
+  }
+
+  get("/api/1/endpoints/:endpoint/results") { req: Request =>
+    ???
+  }
+
+
+  put("/api/1/endpoints/:endpoint/results") { req: Map[String, Any] =>
+
+    s"Hello ${req("id")} of ${req("age")} years of age"
+//    s"Hello ${req.id} of ${req.age} years of age"
+//    req.params.get(":endpoint") match {
+//      case Some(endpoint) =>
+//        logger.warn(s"Got body ${req.}")
+//      case _ => MissingEndpointPathException
+//    }
+  }
+
+  private def loadEndpointDiffs(diffs: Map[String, Any]): Unit = {
+    ???
+  }
+
+  private def loadDiffs(diffs: Map[String, Any]): Unit = {
+    ???
+  }
+
+  private def collectDiffs(): Map[String, Any] = {
+    ???
+  }
+
+  private def collectEndpointDiffs(endpoint: String): Map[String, Any] = {
+    ???
+  }
+
+  private def collectPathDiffs(endpoint: String, path: String, includeRequestResponses: Boolean): Future[Map[String, Any]] = {
+    proxy.collector.prefix(analysis.Field(endpoint, path)) map { drs =>
+      Map(
+           "endpoint" -> endpoint,
+           "path" -> path,
+           "requests" ->
+             Renderer.differenceResults(drs, includeRequestResponses)
+         )
     }
   }
 

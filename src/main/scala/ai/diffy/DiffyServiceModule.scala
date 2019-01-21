@@ -15,19 +15,19 @@ object DiffyServiceModule extends TwitterModule {
     flag("dc", "localhost", "the datacenter where this Diffy instance is deployed")
 
   val servicePort =
-    flag("proxy.port", new InetSocketAddress(9992), "The port where the proxy service should listen")
+    flag("proxy.port", new InetSocketAddress(8880), "The port where the proxy service should listen")
 
   val candidatePath =
-    flag[String]("candidate", "candidate serverset where code that needs testing is deployed")
+    flag[String]("candidate", "localhost:9200","candidate serverset where code that needs testing is deployed")
 
   val primaryPath =
-    flag[String]("master.primary", "primary master serverset where known good code is deployed")
+    flag[String]("master.primary",  "localhost:9000","primary master serverset where known good code is deployed")
 
   val secondaryPath =
-    flag[String]("master.secondary", "secondary master serverset where known good code is deployed")
+    flag[String]("master.secondary",  "localhost:9100","secondary master serverset where known good code is deployed")
 
   val protocol =
-    flag[String]("service.protocol", "Service protocol: thrift, http or https")
+    flag[String]("service.protocol",  "http", "Service protocol: thrift, http or https")
 
   val clientId =
     flag[String]("proxy.clientId", "diffy.proxy", "The clientId to be used by the proxy service to talk to candidate, primary, and master")
@@ -39,7 +39,7 @@ object DiffyServiceModule extends TwitterModule {
     flag[String]("thrift.serviceClass", "UserService", "The service name within the thrift jar e.g. UserService")
 
   val serviceName =
-    flag[String]("serviceName", "Gizmoduck", "The service title e.g. Gizmoduck")
+    flag[String]("serviceName", "My Service", "The service title e.g. Gizmoduck")
 
   val apiRoot =
     flag[String]("apiRoot", "", "The API root the front end should ping, defaults to the current host")
@@ -60,7 +60,7 @@ object DiffyServiceModule extends TwitterModule {
     flag[Duration]("notifications.delay", 4.hours, "duration to wait before sending report out. e.g. 30.minutes or 4.hours")
 
   val rootUrl =
-    flag[String]("rootUrl", "", "Root url to access this service, e.g. diffy-staging-gizmoduck.service.smf1.twitter.com")
+    flag[String]("rootUrl", "localhost:8888", "Root url to access this service, e.g. diffy-staging-gizmoduck.service.smf1.twitter.com")
 
   val allowHttpSideEffects =
     flag[Boolean]("allowHttpSideEffects", false, "Ignore POST, PUT, and DELETE requests if set to false")
